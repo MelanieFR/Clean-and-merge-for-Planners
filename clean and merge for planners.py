@@ -49,14 +49,12 @@ merged_file = merged_file[['Pref', 'Item', 'Rel Dte', 'Due Dte', 'Res Dte', 'Opn
 
 print(merged_file.columns)
 
-# Because Pandas will append the time into the date field, it will become something like 27/10/2021 12:00:00 AM. I only want to keep the date, no time.
-merged_file['Rel Dte'].dt.date
-merged_file['Due Dte'].dt.date
-print(merged_file.head())
+# Because Pandas will append the time into the date field, it will become something like 27/10/2021 12:00:00 AM.
+merged_file['Rel Dte'] = merged_file['Rel Dte'].dt.normalize()
+merged_file['Due Dte'] = merged_file['Due Dte'].dt.normalize()
 
 # Sort the merged file by Rel Dte 
-merged_file.sort_values(['Rel Dte'], inplace=True)
-
+merged_file.sort_values(by="Rel Dte", axis=0, inplace=True)
 print(merged_file.head())
 
 # remove the rows with Vendr = 0
@@ -65,4 +63,4 @@ print(merged_file.head())
 
 # Save the merged_file to an excel file
 # Rename the file name before to run the code
-merged_file.to_excel('C:\\Users\\ms3504\\Desktop\\Python Script\\Planner_file\\mps_ready_051121.xlsx', index=False)
+merged_file.to_excel('C:\\Users\\ms3504\\Desktop\\Python Script\\Planner_file\\Planning_WW_PLN_O_week40.xlsx', index=False)
